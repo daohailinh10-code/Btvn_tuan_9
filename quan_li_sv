@@ -3,31 +3,35 @@
 #include <string.h>
 
 // ====== CẤU TRÚC ======
-typedef struct {
-    char maSV[20];
+Struct Sinhvien {
+    char maSV[8];
     char hoTen[50];
-    char gioiTinh[10];
-    char ngaySinh[15];
+    int gioiTinh;
+    Ngay ngaySinh;
     char diaChi[100];
-    char lop[20];
-    char khoa[50];
-} SinhVien;
+    char lop[12];
+    char khoa[7];
+} ;
 
-typedef struct Node {
-    SinhVien data;
-    struct Node *next;
-} Node;
+struct Ngay
+{
+   int ngay, thang, nam;
+};
+struct Node 
+{ 
+   Sinhvien data;
+   Node *link;
+};
+struct List
+{
+   Node *first;
+   Node *last;
+};
 
-typedef struct {
-    Node *head;
-} List;
-
-// ====== KHỞI TẠO ======
 void initList(List *l) {
     l->head = NULL;
 }
 
-// ====== TẠO NODE ======
 Node* createNode(SinhVien sv) {
     Node *p = (Node*)malloc(sizeof(Node));
     p->data = sv;
