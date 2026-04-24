@@ -1,16 +1,27 @@
-1. Nhập vào Danh sách sinh viên và in ra theo thứ tự tăng dần của MSSV:
-   - Sử dụng hàm strcmp so sánh 2 MSSV;
-   -   Tạo hàm so sánh
-   -   Cho con trỏ p truy cập vào dữ liệu danh sách đã tạo
-   -   Nếu phần tử đầu khác Null, gán giá trị tiếp theo với giá trị đầu
-   -   Con trỏ cur được gán với con trỏ head
-   -   Di chuyển con trỏ cur đến vị tiếp theo gán với con trỏ p
-2. In ra những sinh viên có cùng ngày sinh
-   - Tạo con trỏ p duyệt mảng
-   - Sử dụng hàm strcmp để so sánh ngày sinh
-   - giống nhau=> count++, dịch chuyển con trỏ p
-   - Gía trị count khác 0=> in ra, dịch chuyển con trỏ p
-   - nếu không tìm thấy => in ra "khong tim thay sinh vien cung ngay sinh"
-3. Xóa những sinh viên có cùng ngày sinh ra khỏi danh sách
-- Tương tự như việc in ra những sinh viên có cùng ngày sinh khác bước cuối là giải phóng phần tử thỏa mãn điều kiện
-- 
+1. Sắp xếp danh sách theo MSSV
+- Tạo hàm so sánh: Dùng strcmp(a.maSV, b.maSV)
+- Với mỗi sinh viên cần thêm: Tạo node mới p
+- Nếu danh sách rỗng hoặc MSSV của p nhỏ hơn node đầu: Chèn p vào đầu danh sách
+- Ngược lại: Gán con trỏ cur = head
+- Duyệt danh sách Khi cur->next != NULL và strcmp(cur->next->maSV, p->maSV) < 0
+→ dịch cur = cur->next
+- Chèn p sau cur
+
+2. In sinh viên trùng ngày sinh
+- Duyệt danh sách bằng con trỏ p
+- Với mỗi p: Đặt count = 0
+- Duyệt danh sách lần 2 bằng con trỏ q
+- Nếu ngày sinh p == q → count++
+- Nếu count > 1:
+- In thông tin sinh viên đó
+- Nếu không có sinh viên nào thỏa:
+- In: “không tìm thấy sinh viên cùng ngày sinh”
+
+3. Xóa sinh viên trùng ngày sinh
+- Duyệt danh sách bằng con trỏ p
+- Với mỗi p: Đếm số sinh viên có cùng ngày sinh (giống bài 2)
+- Nếu số lượng > 1: Lưu lại ngày sinh đó
+- Gọi hàm xóa tất cả node có ngày sinh này:
+- Nếu node đầu thỏa → xóa và cập nhật head
+- Duyệt danh sách: Nếu node tiếp theo thỏa → bỏ qua node đó + free
+- Sau khi xóa: Quay lại từ đầu danh sách
