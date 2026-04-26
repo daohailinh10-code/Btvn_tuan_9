@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node {
+    int data;
+    struct Node* next;
+} Node;
+
+// tạo vòng tròn N người
+Node* Taovong(int N) {
+    Node *head = NULL, *temp, *prev = NULL;
+
+    for (int i = 1; i <= N; i++) {
+        temp = (Node*)malloc(sizeof(Node));
+        temp->data = i;
+        temp->next = NULL;
+
+        if (!head)
+            head = temp;
+        else
+            prev->next = temp;
+
+        prev = temp;
+    }
+    prev->next = head; // tạo vòng
+    return head;
+}
+
+// giải Josephus
+int josephus(int N, int M) {
+    Node* head = Taovong(N);
+    Node* curr = head;
+    Node* prev = NULL;
+
+    while (curr->next != curr) {
+        // tìm người thứ M
+        for (int i = 1; i < M; i++) {
+            prev = curr;
+            curr = curr->next;
+        }
+
+        // xóa curr
+        prev->next = curr->next;
+        free(curr);
+
+        curr = prev->next;
+    }
+
+    int winner = curr->data;
+    free(curr);
+    return winner;
+}
+
+int main() {
+    int N = 5;
+
+    printf("M=1: %d\n", josephus(N,1));
+    printf("M=2: %d\n", josephus(N,2));
+    printf("M=3: %d\n", josephus(N,3));
+
+    return 0;
+}
