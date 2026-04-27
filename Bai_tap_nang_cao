@@ -39,17 +39,17 @@ int Timnguoi(int N, int M) {
 
     Node* vong = hien_tai;
 
-    while (vong->next != curr)
+    while (vong->next != hien_tai)
         vong = vong->next;
 
-    while (hien_tai->next != curr) {
+    while (hien_tai->next != hien_tai) {
         int i;
         for (i = 1; i < M; i++) {
-            prev = hien_tai;
+            vong = hien_tai;
             hien_tai = hien_tai->next;
         }
 
-        vong->next = curr->next;
+        vong->next = hien_tai->next;
         free(hien_tai);
         hien_tai = vong->next;
     }
@@ -58,7 +58,6 @@ int Timnguoi(int N, int M) {
     free(hien_tai);
     return winner;
 }
-
 int main() {
     int N = 10;
 
