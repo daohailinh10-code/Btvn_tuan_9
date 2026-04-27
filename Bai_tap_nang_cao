@@ -6,57 +6,66 @@ typedef struct Node {
     struct Node* next;
 } Node;
 
-// tạo vòng tròn N người
 Node* Taovong(int N) {
-    Node *head = NULL, *temp, *prev = NULL;
+    if (N <= 0) return NULL;
 
-    for (int i = 1; i <= N; i++) {
+    Node *head = NULL, *temp, *vong = NULL;
+    int i;
+
+    for (i = 1; i <= N; i++) {
         temp = (Node*)malloc(sizeof(Node));
+        if (temp == NULL) exit(1);
+
         temp->data = i;
         temp->next = NULL;
 
-        if (!head)
+        if (head == NULL)
             head = temp;
         else
-            prev->next = temp;
+            vong->next = temp;
 
-        prev = temp;
+        vong = temp;
     }
-    prev->next = head; // tạo vòng
+
+    vong->next = head;
     return head;
 }
 
-// giải Josephus
-int josephus(int N, int M) {
-    Node* head = Taovong(N);
-    Node* curr = head;
-    Node* prev = NULL;
+int Timnguoi(int N, int M) {
+    if (N <= 0 || M <= 0) return -1;
 
-    while (curr->next != curr) {
-        // tìm người thứ M
-        for (int i = 1; i < M; i++) {
-            prev = curr;
-            curr = curr->next;
+    Node* hien_tai = Taovong(N);
+    if (hien_tai == NULL) return -1;
+
+    Node* vong = hien_tai;
+
+    while (vong->next != curr)
+        vong = vong->next;
+
+    while (hien_tai->next != curr) {
+        int i;
+        for (i = 1; i < M; i++) {
+            prev = hien_tai;
+            hien_tai = hien_tai->next;
         }
 
-        // xóa curr
-        prev->next = curr->next;
-        free(curr);
-
-        curr = prev->next;
+        vong->next = curr->next;
+        free(hien_tai);
+        hien_tai = vong->next;
     }
 
-    int winner = curr->data;
-    free(curr);
+    int winner = hien_tai->data;
+    free(hien_tai);
     return winner;
 }
 
 int main() {
-    int N = 5;
+    int N = 10;
 
-    printf("M=1: %d\n", josephus(N,1));
-    printf("M=2: %d\n", josephus(N,2));
-    printf("M=3: %d\n", josephus(N,3));
+    printf("M=1: %d\n", Timnguoi(N,1));
+    printf("M=2: %d\n", Timnguoi(N,2));
+    printf("M=3: %d\n", Timnguoi(N,3));
 
     return 0;
 }
+
